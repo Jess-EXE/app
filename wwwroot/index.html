@@ -12,8 +12,8 @@
     <link href="css/login.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 </head>
 <body>
 
@@ -96,8 +96,10 @@
 <div id="profile-section" class="hidden">
   <div class="container test-body mt-5"></div>
 
+  
 <div class="row justify-content-center">
 
+  
   <div class="col-3">
     <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
       <img src="img/profile_placeholder.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
@@ -118,10 +120,12 @@
               <th colspan="5" style="text-align:center">CASELOAD</th>
             </tr>
             <tr>
-
+              <th class="hidden" scope="col"></th>
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
               <th scope="col">Date Of Birth</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
 
             </tr>
           </thead>
@@ -143,7 +147,7 @@
 
 <!-- END PROFILE -->
 
-<!-- UPDATE FORM -->
+<!-- INSERT / UPDATE CLIENT FORM -->
 
 <div id="add-client-section" class="mt-5 hidden">
   <div class="container py-5 h-100">
@@ -151,8 +155,23 @@
       <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration shadow-lg" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
-            <h2>Add new client:</h2>
+            <div id="submit-client-title" class="hidden">
+              <h2>Add New Client:</h2>
+            </div>
+            <div id="update-client-title" class="hidden">
+              <h2>Update Client:</h2>
+            </div>
+            
             <form>
+              <div class="form-group hidden">
+                <label for="client-id"></label> 
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">ID</div>
+                  </div> 
+                  <input id="client-id" name="client-id" type="text" class="form-control" required="required">
+                </div>
+              </div>
               <div class="form-group">
                 <label for="client-first-name"></label> 
                 <div class="input-group mb-3">
@@ -172,12 +191,12 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="date-of-birth"></label> 
+                <label for="date"></label> 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <div class="input-group-text">dob</div>
                   </div> 
-                  <input id="date-of-birth" name="date-of-birth" type="text" class="form-control" required="required">
+                  <input id="date" name="date" type="text" class="form-control" required="required">
                 </div>
               </div>
               <!-- <div class="form-group">
@@ -200,9 +219,17 @@
                     <option value="6">Ms. Rivera</option>
                   </select>
               </div> 
-              <div class="form-group d-flex flex-row-reverse">
-                <button name="submit" type="submit" class="btn btn-primary" onclick="SubmitAdd()">Submit</button>
+              <div id="submit-button-section" class="hidden">
+                <div  class="form-group d-flex flex-row-reverse">
+                  <button name="submit" type="" class="btn btn-primary" onclick="SubmitAdd()">Submit</button>
+                </div>
               </div>
+              <div id="update-button-section" class="hidden">
+                <div  class="form-group d-flex flex-row-reverse">
+                  <button name="update" class="btn btn-primary" onclick="SubmitUpdate(); return false;">Update</button>
+                </div>
+              </div>
+              
             </form>
           </div>
         </div>
@@ -212,7 +239,9 @@
 </div>
 
 
-<!-- END UPDATE FORM-->
+<!-- END INSERT / UPDATE CLIENT FORM-->
+
+
 
 <!-- INTERVENTIONS -->
 <div id="interventions-section" class="hidden">
@@ -431,10 +460,10 @@
 
     <script src="js/oteam.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- <script>
+    <script>
       $(document).ready(function(){
           var date_input=$('input[name="date"]'); //our date input has the name "date"
           var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
@@ -445,6 +474,6 @@
               autoclose: true,
           })
       })
-  </script> -->
+  </script>
 </body>
 </html>
