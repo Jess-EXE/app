@@ -134,8 +134,8 @@ function refreshClientTable(clients) {
         clientRows += '<td>' + client.firstName + '</td>';
         clientRows += '<td>' + client.lastName + '</td>';
         clientRows += '<td>' + client.dateOfBirth + '</td>'
-        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-secondary btn-sm">Delete</button>' + '</td>'
-        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.firstName + '" data-last-name="' + client.lastName + '" data-date-of-birth="' + client.dateOfBirth + '" type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>'
+        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.firstName + '" data-last-name="' + client.lastName + '" data-date-of-birth="' + client.dateOfBirth + '" type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
+        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-danger btn-sm">Delete</button>' + '</td>';
         clientRows += '</tr>';
     }
 
