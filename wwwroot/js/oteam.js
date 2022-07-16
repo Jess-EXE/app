@@ -1,38 +1,85 @@
+// TODO: Add cancel button to update form , Ask Morgan to send Down Syndrome PDF and ADD it to conditions , debug all hide/show page functions
+// Update forms and tables with correct db info + fix API , Add HIPPA warning with login , Add conditions page link and link animations
+
+// Note to self: some conditionspage functions are complete, keep an eye out for more
+
 var loginSection = document.getElementById("login-section");
 var profileSection = document.getElementById("profile-section");
 var logOutButton = document.getElementById("log-out-button")
 var navItems = document.getElementById("nav-list-item");
 var addClientSection = document.getElementById("add-client-section");
 var interventionSection = document.getElementById("interventions-section");
-var homeNavLink = document.getElementById("home-nav-link")
-var resourcesNavLink = document.getElementById("resources-nav-link")
+var therapistHomeNavLink = document.getElementById("therapist-home-nav-link");
+var clientHomeNavLink = document.getElementById("client-home-nav-link");
+var resourcesNavLink = document.getElementById("resources-nav-link");
 var dynamicClientRows = document.getElementById("dynamic-client-rows");
 //var updateClientSection = document.getElementById("update-client-section");
 var submitClientButton = document.getElementById("submit-button-section");
 var updateClientButton = document.getElementById("update-button-section");
 var submitClientTitle = document.getElementById("submit-client-title");
 var updateClientTitle = document.getElementById("update-client-title");
+var clientPortfolioSection = document.getElementById("client-profile-section");
+var therapistLoginHome = document.getElementById("therapist-login-home");
+var clientLoginHome = document.getElementById("client-login-home");
+var failedLogIn = document.getElementById("failed-login");
+var conditionsSection = document.getElementById("conditions-section");
 
 
 function LogOut() {
-    profileSection.classList.add("hidden");
+    if (!profileSection.classList.contains("hidden")) {
+        profileSection.classList.add("hidden");
+    }
+    if (!clientPortfolioSection.classList.contains("hidden")) {
+        clientPortfolioSection.classList.add("hidden");
+    }
     loginSection.classList.remove("hidden");
     logOutButton.classList.add("hidden");
     navItems.classList.add("hidden");
-    homeNavLink.classList.remove("active");
+    if (therapistHomeNavLink.classList.contains("active"))
+    {
+        therapistHomeNavLink.classList.remove("active");
+    }
+    else if (clientHomeNavLink.classList.contains("active"))
+    {
+        clientHomeNavLink.classList.remove("active");
+    }
     interventionSection.classList.add("hidden");
-    //updateClientSection.classList.add("hidden");
     addClientSection.classList.add("hidden");
+    interventionSection.classList.add("hidden");
+    conditionsSection.classList.add("hidden");
 }
 
-function LogIn() {
-    loginSection.classList.add("hidden");
-    profileSection.classList.remove("hidden");
-    logOutButton.classList.remove("hidden");
-    navItems.classList.remove("hidden");
-    homeNavLink.classList.add("active");
-    selectClients();
-    
+
+function ClientLogIn() {
+
+    ShowClientPortfolio();
+}
+
+// function ShowClientPortfolio() {
+//     clientPortfolioSection.classList.remove("hidden")
+//     clientLoginHome.classList.remove("hidden");
+//     clientHomeNavLink.classList.add("active");
+// }
+
+function showConditionsSection() {
+    if (therapistHomeNavLink.classList.contains("active"))
+    {
+        therapistHomeNavLink.classList.remove("active");
+    }
+    else if (clientHomeNavLink.classList.contains("active"))
+    {
+        clientHomeNavLink.classList.remove("active");
+    }
+
+    if (!profileSection.classList.contains("hidden")) {
+        profileSection.classList.add("hidden");
+    }
+    if (!clientPortfolioSection.classList.contains("hidden")) {
+        clientPortfolioSection.classList.add("hidden");
+    }
+    conditionsSection.classList.remove("hidden");
+    resourcesNavLink.classList.add("active");
+    interventionSection.classList.add("hidden");
 }
 
 function ShowAddClientSection() {
@@ -74,22 +121,122 @@ function SubmitUpdate() {
 function ShowInterventions() {
     profileSection.classList.add("hidden");
     interventionSection.classList.remove("hidden");
-    homeNavLink.classList.remove("active");
+    if (therapistHomeNavLink.classList.contains("active"))
+    {
+        therapistHomeNavLink.classList.remove("active");
+    }
+    else if (clientHomeNavLink.classList.contains("active"))
+    {
+        clientHomeNavLink.classList.remove("active");
+    }
+
+    if (!profileSection.classList.contains("hidden")) {
+        profileSection.classList.add("hidden");
+    }
+    if (!clientPortfolioSection.classList.contains("hidden")) {
+        clientPortfolioSection.classList.add("hidden");
+    }
     resourcesNavLink.classList.add("active");
     addClientSection.classList.add("hidden");
     //updateClientSection.classList.add("hidden");
+    conditionsSection.classList.add("hidden");
 }
 
-function ShowHome() {
+function ShowTherapistHome() {
     resourcesNavLink.classList.remove("active");
-    homeNavLink.classList.add("active");
+    therapistHomeNavLink.classList.add("active");
+    therapistLoginHome.classList.remove("hidden");
     interventionSection.classList.add("hidden");
     profileSection.classList.remove("hidden");
     addClientSection.classList.add("hidden");
     //updateClientSection.classList.add("hidden");
+    conditionsSection.classList.add("hidden");
 }
 
+function ShowClientHome() {
+    resourcesNavLink.classList.remove("active");
+    clientLoginHome.classList.remove("hidden");
+    clientHomeNavLink.classList.add("active");
+    interventionSection.classList.add("hidden");
+    clientProfileSection.classList.remove("hidden");
+    addClientSection.classList.add("hidden");
+    //updateClientSection.classList.add("hidden");
+    conditionsSection.classList.add("hidden");
+}
 
+function logInAsTherapist() {
+    loginSection.classList.add("hidden");
+    profileSection.classList.remove("hidden");
+    logOutButton.classList.remove("hidden");
+    navItems.classList.remove("hidden");
+    therapistLoginHome.classList.remove("hidden");
+    therapistHomeNavLink.classList.add("active");
+    if (!failedLogIn.classList.contains("hidden")) {
+        failedLogIn.classList.add("hidden");
+    }
+    selectClients();
+}
+
+function logInAsParent() {
+    clientPortfolioSection.classList.remove("hidden")
+    loginSection.classList.add("hidden");
+    navItems.classList.remove("hidden");
+    logOutButton.classList.remove("hidden");
+    clientLoginHome.classList.remove("hidden");
+    clientHomeNavLink.classList.add("active");
+    if (!failedLogIn.classList.contains("hidden")) {
+        failedLogIn.classList.add("hidden");
+    }
+}
+
+function logInFailed() {
+    if (failedLogIn.classList.contains("hidden")) {
+        failedLogIn.classList.remove("hidden");
+    }
+}
+function logIn() {
+    var inputUsername = document.getElementById("typeEmailX-2");
+    var inputPassword = document.getElementById("typePasswordX-2")
+
+    var username = inputUsername.value;
+    var password = inputPassword.value;
+
+    var baseURL = "https://localhost:5001/AttemptLogIn";
+    var queryString = "?username=" + username + "&password=" + password;
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = doAfterLogIn;
+
+    xhr.open("GET", baseURL + queryString, true);
+    xhr.send();
+
+    function doAfterLogIn() {
+
+        if (xhr.readyState === 4) { //done
+            if (xhr.status === 200) { //ok
+
+                // alert(xhr.responseText);
+
+                var logIn = JSON.parse(xhr.responseText);
+
+                if (logIn.result === "Therapist") {
+                    inputUsername.value = "";
+                    inputPassword.value = "";
+                    logInAsTherapist();
+                } else if (logIn.result === "Parent") {
+                    inputUsername.value = "";
+                    inputPassword.value = "";
+                    logInAsParent();
+                } else {
+                    logInFailed();
+                }
+            } else {
+                alert("Server Error: " + xhr.status + " " + xhr.statusText);
+             }
+        }
+    }
+}
 
 function selectClients() {
     var baseURL = "https://localhost:5001/selectclients";
@@ -133,7 +280,8 @@ function refreshClientTable(clients) {
         clientRows += '<td class="hidden">' + client.clientId + '</td>';
         clientRows += '<td>' + client.firstName + '</td>';
         clientRows += '<td>' + client.lastName + '</td>';
-        clientRows += '<td>' + client.dateOfBirth + '</td>'
+        clientRows += '<td>' + client.dateOfBirth + '</td>';
+        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-profile btn btn-outline-primary btn-sm">Profile</button>' + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.firstName + '" data-last-name="' + client.lastName + '" data-date-of-birth="' + client.dateOfBirth + '" type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-danger btn-sm">Delete</button>' + '</td>';
         clientRows += '</tr>';

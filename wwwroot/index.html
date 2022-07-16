@@ -30,18 +30,22 @@
           <div class="oteam-nav-menu collapse navbar-collapse" id="navbarNav">
             <div id="nav-list-item" class="hidden">
               <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a id="home-nav-link" class="nav-link" aria-current="page" onclick="ShowHome()" href="#">Home</a>
-                </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link" href="#">Resources</a>
-                </li> -->
+                <span id="therapist-login-home" class="hidden">
+                  <li class="nav-item">
+                    <a id="therapist-home-nav-link" class="nav-link" aria-current="page" onclick="ShowTherapistHome()" href="#">Home</a>
+                  </li>
+                </span>
+                <span id="client-login-home" class="hidden">
+                  <li class="nav-item">
+                    <a id="client-home-nav-link" class="nav-link" aria-current="page" onclick="ShowClientHome()" href="#">Home</a>
+                  </li>
+                </span>
                 <div class="dropdown">
                   <li class="nav-item">
                     <a id="resources-nav-link" class="nav-link dropdown-toggle" role="button" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Resources</a>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Conditions</a></li>
+                      <li><a class="dropdown-item" onclick="showConditionsSection()">Conditions</a></li>
                       <li><a class="dropdown-item" onclick="ShowInterventions()" href="#">Interventions</a></li>
                     </ul>
                   </li>
@@ -68,7 +72,7 @@
             <div class="card-body p-5 text-center">
   
               <img src="img/NewLogo.png" alt="" class="loginlogo">
-  
+              <span id="failed-login" class="hidden"><h6 style="color: red; padding: 5px;">The username or password you entered was incorrect. Please try again.</h6></span>
               <div class="form-outline mb-4">
                 <input type="email" id="typeEmailX-2" class="form-control form-control-lg" />
                 <label class="form-label" for="typeEmailX-2">Email</label>
@@ -78,8 +82,7 @@
                 <input type="password" id="typePasswordX-2" class="form-control form-control-lg" />
                 <label class="form-label" for="typePasswordX-2">Password</label>
               </div>
-  
-              <button class="btn btn-primary btn-lg btn-block shadow" onclick="LogIn()">Login</button>      
+              <button class="btn btn-primary btn-lg btn-block shadow" onclick="logIn()">Login</button>      
             </div>
           </div>
         </div>
@@ -91,7 +94,7 @@
 <!-- END LOGIN -->
 
 
-<!-- PROFILE -->
+<!-- THERAPIST PROFILE -->
 
 <div id="profile-section" class="hidden">
   <div class="container test-body mt-5"></div>
@@ -117,13 +120,14 @@
         <table style="text-align:center" class="table table-striped table-hover table-light border-dark shadow">
           <thead>
             <tr>
-              <th colspan="5" style="text-align:center">CASELOAD</th>
+              <th colspan="6" style="text-align:center">CASELOAD</th>
             </tr>
             <tr>
               <th class="hidden" scope="col"></th>
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
               <th scope="col">Date Of Birth</th>
+              <th scope="col"></th>
               <th scope="col"></th>
               <th scope="col"></th>
 
@@ -145,7 +149,64 @@
 </div>
 </div>
 
-<!-- END PROFILE -->
+<!-- END THERAPIST PROFILE -->
+
+<!-- CLIENT PROFILE -->
+
+<div id="client-profile-section" class="hidden">
+  <div class="container test-body mt-5"></div>
+
+  
+<div class="row justify-content-center">
+
+  
+  <div class="col-3">
+    <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
+      <img src="img/profile_placeholder.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
+      <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">Billy Bowman</h4>
+      <hr>
+      <h5>Date Of Birth: <strong>06/12/2017</strong></h5>
+      <h5>Age: <strong>5</strong></h5>
+      <h5>Therapist: <strong>John Doe, OTD-S</strong></h5>
+      <hr>
+      <h5>Primary Contact: <strong>Mark Anderson</strong></h5>
+      <h5>Phone Number: <strong>555-555-5555</strong></h5>
+      <h5>Email Address: <strong>MAnderson@mail.com</strong></h5>
+  </div>
+  </div>
+  
+
+<div class="col-7">
+    <div class="table-responsive rounded">
+        <table style="text-align:center" class="table table-striped table-hover table-light border-dark shadow">
+          <thead>
+            <tr>
+              <th colspan="6" style="text-align:center">MESSAGE BOARD</th>
+            </tr>
+            <tr>
+              <th class="hidden" scope="col"></th>
+              <th scope="col">From</th>
+              <th scope="col">Message</th>
+              <th scope="col">Date Sent</th>
+              <th scope="col">Title</th>
+            </tr>
+          </thead>
+          <tbody id="dynamic-client-rows">
+
+          </tbody>
+      
+        </table>
+</div>
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-primary buttonSpace shadow" onclick="">Send Message</button>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- END THERAPIST PROFILE -->
 
 <!-- INSERT / UPDATE CLIENT FORM -->
 
@@ -457,6 +518,128 @@
 
 
 <!-- END INTERVENTIONS-->
+
+<!-- CONDITIONS -->
+
+  <div id="conditions-section" class="hidden">
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-6">
+          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+            <div class="card-body p-5 text-center">
+              <div class="jumbotron">
+                <h1 class="display-4">Attention Deficit Hyperactivity Disorder</h1>
+                <hr>
+                <a type="button" class="btn btn-success btn-lg" href="pdf/Attention Deficit Hyperactivity Disorder.pdf" target=”_blank”>Infomation Sheet</a>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </section>
+
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-6">
+          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+            <div class="card-body p-5 text-center">
+              <div class="jumbotron">
+                <h1 class="display-4">Autism Spectrum Disorder</h1>
+                <hr>
+                <a type="button" class="btn btn-success btn-lg" href="pdf/_Autism Spectrum Disorder_.pdf" target=”_blank”>Infomation Sheet</a>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </section>
+
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-6">
+          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+            <div class="card-body p-5 text-center">
+              <div class="jumbotron">
+                <h1 class="display-4">Cerebral Palsy</h1>
+                <hr>
+                <a type="button" class="btn btn-success btn-lg" href="pdf/Cerebral Palsy.pdf" target=”_blank”>Infomation Sheet</a>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </section>
+
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-6">
+          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+            <div class="card-body p-5 text-center">
+              <div class="jumbotron">
+                <h1 class="display-4">Developmental Delay</h1>
+                <hr>
+                <a type="button" class="btn btn-success btn-lg" href="pdf/_Developmental Delay.pdf" target=”_blank”>Infomation Sheet</a>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </section>
+
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-6">
+          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+            <div class="card-body p-5 text-center">
+              <div class="jumbotron">
+                <h1 class="display-4">Down Syndrome</h1>
+                <hr>
+                <a type="button" class="btn btn-success btn-lg" href="pdf/Attention Deficit Hyperactivity Disorder.pdf" target=”_blank”>Infomation Sheet</a>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </section>
+
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-6">
+          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+            <div class="card-body p-5 text-center">
+              <div class="jumbotron">
+                <h1 class="display-4">Mental Health</h1>
+                <hr>
+                <a type="button" class="btn btn-success btn-lg" href="pdf/Mental Health.pdf" target=”_blank”>Infomation Sheet</a>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  </section>
+
+  </div>
+
+
+  <!-- END CONDITIONS -->
 
     <script src="js/oteam.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
