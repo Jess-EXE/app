@@ -13,7 +13,7 @@ var submitClientTitle = document.getElementById("submit-client-title");
 var updateClientTitle = document.getElementById("update-client-title");
 var clientPortfolioSection = document.getElementById("client-profile-section");
 var clientLoginHome = document.getElementById("client-login-home");
-var currentPrimaryContactIdNumber;
+var currentPrimaryContactIdNumber = 1;
 //client profile section
 var clientProfileFirstName = document.getElementById("client-profile-first-name");
 var clientProfileLastName = document.getElementById("client-profile-last-name");
@@ -97,6 +97,7 @@ function ShowAddClientSection() {
     profileSection.classList.add("hidden");
     submitClientButton.classList.remove("hidden");
     submitClientTitle.classList.remove("hidden");
+    GetCurrentPrimaryContactIdNumber();
 }
 
 function ShowUpdateClientSection(event) {
@@ -251,7 +252,7 @@ function logIn() {
 }
 
 function GetCurrentPrimaryContactIdNumber() {
-    var baseURL = "https://localhost:5001/GetCurrentPrimaryContactIdNumber";
+    var baseURL = "https://localhost:5001/CurrentPrimaryContactIdNumber";
     var queryString = "";
 
     var xhr = new XMLHttpRequest();
@@ -269,10 +270,13 @@ function GetCurrentPrimaryContactIdNumber() {
                 
                 var client = JSON.parse(xhr.responseText);
 
-                currentPrimaryContactIdNumber = client.currentPrimaryContactId;
+                var currentNumber = client.currentPrimaryContactId;
             } else {
                 alert("Server Error: " + xhr.status + " " + xhr.statusText);
              }
+             
+             currentPrimaryContactIdNumber = currentNumber;
+             alert(currentPrimaryContactIdNumber);
         }
     }
 }
@@ -407,7 +411,7 @@ function insertClient() {
     var contactState = inputContactState.value;
 
     var baseURL = "https://localhost:5001/InsertClient";
-    var queryString = "?therapistId=" + currentTherapistId + "&primaryContactFirstName=" + contactFirstName + "&primaryContactLastName=" + contactLastName + "&address=" + contactAddress + "&city=" + contactCity + "&stateId=" + contactState + "&zipCode=" + contactZip + "&phone=" + contactPhone + "&emailAddress=" + contactEmail + "&clientFirstName=" + firstName + "&clientLastName=" + lastName + "&clientDateOfBirth=" + dateOfBirth;
+    var queryString = "?primaryContactId=" + currentPrimaryContactIdNumber + "&therapistId=" + currentTherapistId + "&primaryContactFirstName=" + contactFirstName + "&primaryContactLastName=" + contactLastName + "&address=" + contactAddress + "&city=" + contactCity + "&stateId=" + contactState + "&zipCode=" + contactZip + "&phone=" + contactPhone + "&emailAddress=" + contactEmail + "&clientFirstName=" + firstName + "&clientLastName=" + lastName + "&clientDateOfBirth=" + dateOfBirth;
 
     var xhr = new XMLHttpRequest();
 
