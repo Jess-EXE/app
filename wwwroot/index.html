@@ -163,9 +163,9 @@
   <div class="col-3">
     <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
       <img src="img/profile_placeholder.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
-      <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">Billy Bowman</h4>
+      <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="client-profile-first-name" style="padding-right: 8px;"></span><span id="client-profile-last-name"></span></h4>
       <hr>
-      <h5>Date Of Birth: <strong>06/12/2017</strong></h5>
+      <h5>Date Of Birth: <strong id="client-profile-date-of-birth"></strong></h5>
       <h5>Age: <strong>5</strong></h5>
       <h5>Therapist: <strong>John Doe, OTD-S</strong></h5>
       <hr>
@@ -197,8 +197,14 @@
       
         </table>
 </div>
+<form action="">
+  <div class="form-group">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your message"></textarea>
+  </div>
+</form>
+
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-primary buttonSpace shadow" onclick="">Send Message</button>
+  <button type="button" class="btn btn-primary buttonSpace shadow" onclick="" style="margin-top: 10px;">Send Message</button>
 </div>
 
 </div>
@@ -305,30 +311,280 @@
 
 
 <!-- INTERVENTIONS -->
+
+
+
 <div id="interventions-section" class="hidden">
-  <section class="">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-6">
-          <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
-            <div class="card-body p-5 text-center">
-              <div class="jumbotron">
-                <h1 class="display-4">Emotional Regulation</h1>
-                <hr>
-                
-                <iframe width="420" height="315"
-                src="https://www.youtube.com/embed/giByDHIlozM">
-                </iframe>
-  
-                <hr class="my-4">
-                <a type="button" class="btn btn-success btn-lg" href="pdf/Emotional Regulation Skills.pdf" target=”_blank”>Infomation Sheet</a>
-                <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/6407VIGIS5WS?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+
+  <div class="row">
+
+    <div class="col-6">
+      <section class="">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+              <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                <div class="card-body p-5 text-center">
+                  <div class="jumbotron">
+                    <h1 class="display-4">Emotional Regulation</h1>
+                    <hr>
+                    
+                    <iframe width="420" height="315"
+                    src="https://www.youtube.com/embed/giByDHIlozM">
+                    </iframe>
+      
+                    <hr class="my-4">
+                    <a type="button" class="btn btn-success btn-lg" href="pdf/Emotional Regulation Skills.pdf" target=”_blank”>Infomation Sheet</a>
+                    <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/6407VIGIS5WS?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                  </div>
+                </div>
+                </div>
               </div>
             </div>
+          </div> 
+      </section>
+    </div>
+
+      <div class="col-6">
+        <section class="">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Fine Motor Development</h1>
+                      <hr>
+                      
+                      <iframe width="420" height="315"
+                      src="https://www.youtube.com/embed/-rrmSj-2TvE">
+                      </iframe>
+        
+                      <hr class="my-4">
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Fine Motor Development.pdf" target=”_blank”>Infomation Sheet</a>
+                      <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/1XZBH6QIDENI2?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <section class="">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Visual Skills</h1>
+                      <hr>
+                      
+                      <iframe width="420" height="315"
+                      src="https://www.youtube.com/embed/WPgicH0hBws">
+                      </iframe>
+        
+                      <hr class="my-4">
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Visual Skills.pdf" target=”_blank”>Infomation Sheet</a>
+                      <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/1COBHFMG46B5K?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+
+      
+
+      <div class="col-6">
+        <section class="">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Pre-Handwriting Skills</h1>
+                      <hr>
+                      
+                      <iframe width="420" height="315"
+                      src="https://www.youtube.com/embed/5Cu9sST_-xU">
+                      </iframe>
+        
+                      <hr class="my-4">
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Pre-Handwriting.pdf" target=”_blank”>Infomation Sheet</a>
+                      <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/29FI7MK4IIJDO?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+    </div>
+    
+    
+  
+  <div class="row">
+
+    <div class="col-6">
+      <section class="">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+              <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                <div class="card-body p-5 text-center">
+                  <div class="jumbotron">
+                    <h1 class="display-4">Self-Care Skills</h1>
+                    <hr>
+                    
+                    <iframe width="420" height="315"
+                    src="https://www.youtube.com/embed/HdcF1Lou-2M">
+                    </iframe>
+      
+                    <hr class="my-4">
+                    <a type="button" class="btn btn-success btn-lg" href="pdf/Self Care Skills.pdf" target=”_blank”>Infomation Sheet</a>
+                    <span class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle btn-lg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Shopping List
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="https://www.amazon.com/hz/wishlist/ls/3Q1OB43F96LUS?ref_=wl_share" target=”_blank”>Dressing</a></li>
+                        <li><a class="dropdown-item" href="https://www.amazon.com/hz/wishlist/ls/UHK1I8GDJCYZ?ref_=wl_share" target=”_blank”>Feeding</a></li>
+                        <li><a class="dropdown-item" href="https://www.amazon.com/hz/wishlist/ls/2ED8VACN9SII7?ref_=wl_share" target=”_blank”>Toileting</a></li>
+                      </ul>
+                    </span>
+                  </div>
+                </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div> 
+          </div> 
+      </section>
+    </div>
+
+    <div class="col-6">
+      <section class="">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+              <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                <div class="card-body p-5 text-center">
+                  <div class="jumbotron">
+                    <h1 class="display-4">Sensory Processing</h1>
+                    <hr>
+                    
+                    <iframe width="420" height="315"
+                    src="https://www.youtube.com/embed/NuGWMRXL5ag">
+                    </iframe>
+      
+                    <hr class="my-4">
+                    <a type="button" class="btn btn-success btn-lg" href="pdf/Sensory Processing.pdf" target=”_blank”>Infomation Sheet</a>
+                    <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/1FZ2LKK1K3FHZ?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+      </section>
+    </div>
+  </div>
+
+
+    <div class="row">
+
+      <div class="col-6">
+        <section class="">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Social Emotional and Cognitive Development</h1>
+                      <hr>
+                      
+                      <iframe width="420" height="315"
+                      src="https://www.youtube.com/embed/kMiIhytxx78">
+                      </iframe>
+        
+                      <hr class="my-4">
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Social and Cognitive Development (1).pdf" target=”_blank”>Infomation Sheet</a>
+                      <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/11D0N7G1GKNYL?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+
+      <div class="col-6">
+        <section class="">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Gross Motor<br>Development</h1>
+                      <hr>
+                      
+                      <iframe width="420" height="315"
+                      src="https://www.youtube.com/embed/-Nqyouj8Yg0">
+                      </iframe>
+        
+                      <hr class="my-4">
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/_Gross Motor Development.pdf" target=”_blank”>Infomation Sheet</a>
+                      <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/3U0GR44ZRXG97?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+      
+      
+    </div>
+
+
+
+
+  <!-- <section class="">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+              <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                <div class="card-body p-5 text-center">
+                  <div class="jumbotron">
+                    <h1 class="display-4">Emotional Regulation</h1>
+                    <hr>
+                    
+                    <iframe width="420" height="315"
+                    src="https://www.youtube.com/embed/giByDHIlozM">
+                    </iframe>
+      
+                    <hr class="my-4">
+                    <a type="button" class="btn btn-success btn-lg" href="pdf/Emotional Regulation Skills.pdf" target=”_blank”>Infomation Sheet</a>
+                    <a class="btn btn-primary btn-lg" href="https://www.amazon.com/hz/wishlist/ls/6407VIGIS5WS?ref_=wl_share" target=”_blank” role="button">Shopping List</a>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div> 
   </section>
   
   <section class="">
@@ -513,7 +769,7 @@
           </div>
         </div>
       </div> 
-  </section>
+  </section> -->
 </div>
 
 
@@ -522,7 +778,135 @@
 <!-- CONDITIONS -->
 
   <div id="conditions-section" class="hidden">
-  <section class="">
+
+    <div class="row">
+      <div class="col-4">
+        <section>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Attention Deficit Hyperactivity Disorder</h1>
+                      <hr>
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Attention Deficit Hyperactivity Disorder.pdf" target=”_blank”>Infomation Sheet</a>
+      
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+      <div class="col-4">
+        <section>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Autism Spectrum Disorder</h1>
+                      <hr>
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/_Autism Spectrum Disorder_.pdf" target=”_blank”>Infomation Sheet</a>
+      
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+      <div class="col-4">
+        <section>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Cerebral Palsy</h1>
+                      <hr>
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Cerebral Palsy.pdf" target=”_blank”>Infomation Sheet</a>
+      
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4">
+        <section>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Developmental Delay</h1>
+                      <hr>
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/_Developmental Delay.pdf" target=”_blank”>Infomation Sheet</a>
+      
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+      <div class="col-4">
+        <section>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Down Syndrome</h1>
+                      <hr>
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Attention Deficit Hyperactivity Disorder.pdf" target=”_blank”>Infomation Sheet</a>
+      
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+      <div class="col-4">
+        <section>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="card shadow-lg" style="border-radius: 1rem;  background-color: #f9e5d7;">
+                  <div class="card-body p-5 text-center">
+                    <div class="jumbotron">
+                      <h1 class="display-4">Mental Health</h1>
+                      <hr>
+                      <a type="button" class="btn btn-success btn-lg" href="pdf/Mental Health.pdf" target=”_blank”>Infomation Sheet</a>
+      
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </section>
+      </div>
+    </div>
+
+
+    <!-- <section>
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-6">
@@ -634,7 +1018,7 @@
           </div>
         </div>
       </div> 
-  </section>
+  </section> -->
 
   </div>
 
