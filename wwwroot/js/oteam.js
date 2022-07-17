@@ -13,6 +13,7 @@ var submitClientTitle = document.getElementById("submit-client-title");
 var updateClientTitle = document.getElementById("update-client-title");
 var clientPortfolioSection = document.getElementById("client-profile-section");
 var clientLoginHome = document.getElementById("client-login-home");
+var currentPrimaryContactIdNumber;
 //client profile section
 var clientProfileFirstName = document.getElementById("client-profile-first-name");
 var clientProfileLastName = document.getElementById("client-profile-last-name");
@@ -22,6 +23,7 @@ var clientProfileDateOfBirth = document.getElementById("client-profile-date-of-b
 var profileSection = document.getElementById("profile-section");
 var therapistHomeNavLink = document.getElementById("therapist-home-nav-link");
 var therapistLoginHome = document.getElementById("therapist-login-home");
+var currentTherapistId;
 
 // General
 var loginSection = document.getElementById("login-section");
@@ -55,6 +57,7 @@ function LogOut() {
     addClientSection.classList.add("hidden");
     interventionSection.classList.add("hidden");
     conditionsSection.classList.add("hidden");
+    currentTherapistId = null;
 }
 
 
@@ -231,6 +234,7 @@ function logIn() {
                 if (logIn.result === "Therapist") {
                     inputUsername.value = "";
                     inputPassword.value = "";
+                    currentTherapistId = logIn.id;
                     logInAsTherapist();
                 } else if (logIn.result === "Parent") {
                     inputUsername.value = "";
@@ -239,6 +243,33 @@ function logIn() {
                 } else {
                     logInFailed();
                 }
+            } else {
+                alert("Server Error: " + xhr.status + " " + xhr.statusText);
+             }
+        }
+    }
+}
+
+function GetCurrentPrimaryContactIdNumber() {
+    var baseURL = "https://localhost:5001/GetCurrentPrimaryContactIdNumber";
+    var queryString = "";
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = doAfterGetCurrentContactNumber;
+
+    xhr.open("GET", baseURL + queryString, true);
+    xhr.send();
+
+    function doAfterGetCurrentContactNumber() {
+
+        if (xhr.readyState === 4) { //done
+            if (xhr.status === 200) { //ok
+
+                
+                var client = JSON.parse(xhr.responseText);
+
+                currentPrimaryContactIdNumber = client.currentPrimaryContactId;
             } else {
                 alert("Server Error: " + xhr.status + " " + xhr.statusText);
              }
@@ -317,11 +348,11 @@ function refreshClientTable(clients) {
         var client = clients[i];
         clientRows += '<tr>';
         clientRows += '<td class="hidden">' + client.clientId + '</td>';
-        clientRows += '<td>' + client.firstName + '</td>';
-        clientRows += '<td>' + client.lastName + '</td>';
-        clientRows += '<td>' + client.dateOfBirth + '</td>';
+        clientRows += '<td>' + client.clientFirstName + '</td>';
+        clientRows += '<td>' + client.clientLastName + '</td>';
+        clientRows += '<td>' + client.clientDateOfBirth + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-profile btn btn-outline-primary btn-sm">Profile</button>' + '</td>';
-        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.firstName + '" data-last-name="' + client.lastName + '" data-date-of-birth="' + client.dateOfBirth + '" type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
+        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.clientFirstName + '" data-last-name="' + client.clientLastName + '" data-date-of-birth="' + client.clientDateOfBirth + '" type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-danger btn-sm">Delete</button>' + '</td>';
         clientRows += '</tr>';
     }
@@ -354,13 +385,29 @@ function insertClient() {
     var inputFirstName = document.getElementById("client-first-name");
     var inputLastName = document.getElementById("client-last-name");
     var inputDateOfBirth = document.getElementById("date");
+    var inputContactFirstName = document.getElementById("primary-contact-first-name");
+    var inputContactLastName = document.getElementById("primary-contact-last-name");
+    var inputContactState = document.getElementById("primary-contact-state");
+    var inputContactAddress = document.getElementById("primary-contact-address");
+    var inputContactZip = document.getElementById("primary-contact-zip");
+    var inputContactPhone = document.getElementById("primary-contact-phone");
+    var inputContactEmail = document.getElementById("primary-contact-email");
+    var inputContactCity = document.getElementById("primary-contact-city");
 
     var firstName = inputFirstName.value;
     var lastName = inputLastName.value;
     var dateOfBirth = inputDateOfBirth.value;
+    var contactFirstName = inputContactFirstName.value;
+    var contactLastName = inputContactLastName.value;
+    var contactAddress = inputContactAddress.value;
+    var contactZip = inputContactZip.value;
+    var contactPhone = inputContactPhone.value;
+    var contactEmail = inputContactEmail.value;
+    var contactCity = inputContactCity.value;
+    var contactState = inputContactState.value;
 
     var baseURL = "https://localhost:5001/InsertClient";
-    var queryString = "?firstName=" + firstName + "&lastName=" + lastName + "&dateOfBirth=" + dateOfBirth;
+    var queryString = "?therapistId=" + currentTherapistId + "&primaryContactFirstName=" + contactFirstName + "&primaryContactLastName=" + contactLastName + "&address=" + contactAddress + "&city=" + contactCity + "&stateId=" + contactState + "&zipCode=" + contactZip + "&phone=" + contactPhone + "&emailAddress=" + contactEmail + "&clientFirstName=" + firstName + "&clientLastName=" + lastName + "&clientDateOfBirth=" + dateOfBirth;
 
     var xhr = new XMLHttpRequest();
 
@@ -381,6 +428,12 @@ function insertClient() {
                     inputFirstName.value = "";
                     inputLastName.value = "";
                     inputDateOfBirth.value = "";
+                    inputContactFirstName.value = "";
+                    inputContactLastName.value = "";
+                    inputContactAddress.value = "";
+                    inputContactZip.value = "";
+                    inputContactPhone.value = "";
+                    inputContactEmail.value = "";
                 } else {
                     alert("API Error: " + response.message);
                 }
@@ -468,3 +521,28 @@ function deleteClient(event) {
         }
     }
 }
+
+// function getCurrentPrimaryContactIdNumber() {
+//     var baseURL = "https://localhost:5001/GetCurrentPrimaryContactIdNumber";
+//     var queryString = "";
+
+//     var xhr = new XMLHttpRequest();
+
+//     xhr.onreadystatechange = doAfterGetIdNumber;
+
+//     xhr.open("GET", baseURL + queryString, true);
+//     xhr.send();
+
+//     function doAfterGetIdNumber() {
+
+//         if (xhr.readyState === 4) { //done
+//             if (xhr.status === 200) { //ok
+
+//                 return 
+
+//             } else {
+//                 alert("Server Error: " + xhr.status + " " + xhr.statusText);
+//              }
+//         }
+//     }
+// }
