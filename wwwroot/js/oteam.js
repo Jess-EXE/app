@@ -584,6 +584,7 @@ function refreshMessageTable(userDbMessages) {
         //MessageRows += '<td class="hidden">' + client.clientId + '</td>';
         messageRows += '<td>' + message.fromUser + '</td>';
         messageRows += '<td>' + message.messageText + '</td>';
+        messageRows += '<td>' + message.timeSent + '</td>';
         //MessageRows += '<td>' + client.clientLastName + '</td>';
         //MessageRows += '<td>' + client.clientDateOfBirth + '</td>';
         //MessageRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-profile btn btn-outline-primary btn-sm">Profile</button>' + '</td>';
@@ -593,9 +594,10 @@ function refreshMessageTable(userDbMessages) {
     }
 
     dynamicMessageRows.innerHTML = messageRows;
+    tablepls();
 }
 
-function insertClient() {
+function insertMessage() {
     var inputMessage = document.getElementById("new-message");
     var sentFromId = currentTherapistId
     var clientIdInputMessage = clientIdForMessages;
@@ -603,8 +605,8 @@ function insertClient() {
     var messageToSend = inputMessage.value;
     
 
-    var baseURL = "https://localhost:5001/InsertClient";
-    var queryString = "?clientId=" + clientIdInputMessage + "&sentFromId=" + sentFromId + "&messageToSend=" + messageToSend;
+    var baseURL = "https://localhost:5001/InsertMessage";
+    var queryString = "?clientId=" + clientIdInputMessage + "&sentFromId=" + sentFromId + "&messageText=" + messageToSend;
 
     var xhr = new XMLHttpRequest();
 
@@ -621,7 +623,7 @@ function insertClient() {
                 var response = JSON.parse(xhr.responseText);
 
                 if (response.result === "success") {
-                    refreshMessageTable(response.clients);
+                    refreshMessageTable(response.userDbMessages);
                     inputMessage.value = "";
                 } else {
                     alert("API Error: " + response.message);
@@ -632,3 +634,25 @@ function insertClient() {
         }
     }
 }
+
+function calculateAge (birthDate, otherDate) {
+    birthDate = new Date(birthDate);
+    otherDate = new Date(otherDate);
+
+    var years = (otherDate.getFullYear() - birthDate.getFullYear());
+
+    if (otherDate.getMonth() < birthDate.getMonth() || 
+        otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+        years--;
+    }
+
+    return years;
+}
+
+function tablepls() {
+    $('#test-table').DataTable( {
+        "lengthChange": false,
+        "pageLength": 8,
+        "searching": false
+    });
+};
