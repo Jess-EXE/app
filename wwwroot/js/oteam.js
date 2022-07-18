@@ -3,6 +3,7 @@
 // Potentially Therapist and client specific navbar
 // Note to self: some conditionspage functions are complete, keep an eye out for more
 
+var therapistLoggedIn = false;
 // Client Specific
 var addClientSection = document.getElementById("add-client-section");
 var clientHomeNavLink = document.getElementById("client-home-nav-link");
@@ -13,7 +14,7 @@ var submitClientTitle = document.getElementById("submit-client-title");
 var updateClientTitle = document.getElementById("update-client-title");
 var clientPortfolioSection = document.getElementById("client-profile-section");
 var clientLoginHome = document.getElementById("client-login-home");
-var currentPrimaryContactIdNumber = 1;
+var currentPrimaryContactIdNumber;
 //client profile section
 var clientProfileFirstName = document.getElementById("client-profile-first-name");
 var clientProfileLastName = document.getElementById("client-profile-last-name");
@@ -33,6 +34,12 @@ var interventionSection = document.getElementById("interventions-section");
 var resourcesNavLink = document.getElementById("resources-nav-link");
 var failedLogIn = document.getElementById("failed-login");
 var conditionsSection = document.getElementById("conditions-section");
+
+var dynamicMessageRows = document.getElementById("dynamic-message-rows");
+
+var clientIdForMessages;
+var therapistIdForMessages;
+var primaryContactIdForMessages;
 
 
 function LogOut() {
@@ -186,6 +193,7 @@ function logInAsTherapist() {
     if (!failedLogIn.classList.contains("hidden")) {
         failedLogIn.classList.add("hidden");
     }
+    therapistLoggedIn = true;
     selectClients();
 }
 
@@ -283,6 +291,10 @@ function GetCurrentPrimaryContactIdNumber() {
 
 function loadClientProfile(event) {
     var clientId = document.getElementById("client-id").value = event.target.dataset.clientId;
+    // Do this for messages then reset value in Message function
+    clientIdForMessages = clientId;
+    //var currentPrimaryContactId = document.getElementById("primary-contact-id").value = event.target.dataset.primaryContactId;
+    //primaryContactIdForMessages = currentPrimaryContactId;
 
     var baseURL = "https://localhost:5001/LoadClientProfile";
     var queryString = "?clientId=" + clientId;
@@ -301,9 +313,10 @@ function loadClientProfile(event) {
 
                 var client = JSON.parse(xhr.responseText);
                 ShowClientHome();
-                clientProfileFirstName.innerHTML = client.firstName;
-                clientProfileLastName.innerHTML = client.lastName;
-                clientProfileDateOfBirth.innerHTML = client.dateOfBirth;
+                clientProfileFirstName.innerHTML = client.clientFirstName;
+                clientProfileLastName.innerHTML = client.clientLastName;
+                clientProfileDateOfBirth.innerHTML = client.clientDateOfBirth;
+                selectMessages();
                 
             } else {
                 alert("Server Error: " + xhr.status + " " + xhr.statusText);
@@ -356,7 +369,7 @@ function refreshClientTable(clients) {
         clientRows += '<td>' + client.clientLastName + '</td>';
         clientRows += '<td>' + client.clientDateOfBirth + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-profile btn btn-outline-primary btn-sm">Profile</button>' + '</td>';
-        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.clientFirstName + '" data-last-name="' + client.clientLastName + '" data-date-of-birth="' + client.clientDateOfBirth + '" type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
+        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.clientFirstName + '" data-last-name="' + client.clientLastName + '" data-date-of-birth="' + client.clientDateOfBirth + '" data-primary-contact-id="' + client.primaryContactId + '"type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-danger btn-sm">Delete</button>' + '</td>';
         clientRows += '</tr>';
     }
@@ -526,27 +539,96 @@ function deleteClient(event) {
     }
 }
 
-// function getCurrentPrimaryContactIdNumber() {
-//     var baseURL = "https://localhost:5001/GetCurrentPrimaryContactIdNumber";
-//     var queryString = "";
+function selectMessages() {
 
-//     var xhr = new XMLHttpRequest();
+    
 
-//     xhr.onreadystatechange = doAfterGetIdNumber;
+    var baseURL = "https://localhost:5001/selectmessages";
+    var queryString = "?clientId=" + clientIdForMessages;
 
-//     xhr.open("GET", baseURL + queryString, true);
-//     xhr.send();
+    var xhr = new XMLHttpRequest();
 
-//     function doAfterGetIdNumber() {
+    xhr.onreadystatechange = doAfterGetMessages;
+    
+    xhr.open("GET", baseURL + queryString, true);
+    xhr.send();
+    
 
-//         if (xhr.readyState === 4) { //done
-//             if (xhr.status === 200) { //ok
+    function doAfterGetMessages() {
+        
+        if (xhr.readyState === 4) { //done
+            if (xhr.status === 200) { //ok
 
-//                 return 
+                
 
-//             } else {
-//                 alert("Server Error: " + xhr.status + " " + xhr.statusText);
-//              }
-//         }
-//     }
-// }
+                var response = JSON.parse(xhr.responseText);
+				if (response.result === "success") {
+                refreshMessageTable(response.userDbMessages);
+                } else {
+                    alert("API Error: " + response.message);
+                }
+            } else {
+                alert("Server Error: " + xhr.status + " " + xhr.statusText);
+             }
+        }
+    }
+}
+
+function refreshMessageTable(userDbMessages) {
+
+    var messageRows = '';
+
+    for (var i = 0; i < userDbMessages.length; i++) {
+        var message = userDbMessages[i];
+        messageRows += '<tr>';
+        //MessageRows += '<td class="hidden">' + client.clientId + '</td>';
+        messageRows += '<td>' + message.fromUser + '</td>';
+        messageRows += '<td>' + message.messageText + '</td>';
+        //MessageRows += '<td>' + client.clientLastName + '</td>';
+        //MessageRows += '<td>' + client.clientDateOfBirth + '</td>';
+        //MessageRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-profile btn btn-outline-primary btn-sm">Profile</button>' + '</td>';
+        //MessageRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.clientFirstName + '" data-last-name="' + client.clientLastName + '" data-date-of-birth="' + client.clientDateOfBirth + '"type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
+        //MessageRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-danger btn-sm">Delete</button>' + '</td>';
+        messageRows += '</tr>';
+    }
+
+    dynamicMessageRows.innerHTML = messageRows;
+}
+
+function insertClient() {
+    var inputMessage = document.getElementById("new-message");
+    var sentFromId = currentTherapistId
+    var clientIdInputMessage = clientIdForMessages;
+
+    var messageToSend = inputMessage.value;
+    
+
+    var baseURL = "https://localhost:5001/InsertClient";
+    var queryString = "?clientId=" + clientIdInputMessage + "&sentFromId=" + sentFromId + "&messageToSend=" + messageToSend;
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = doAfterSendMessage;
+
+    xhr.open("GET", baseURL + queryString, true);
+    xhr.send();
+
+    function doAfterSendMessage() {
+
+        if (xhr.readyState === 4) { //done
+            if (xhr.status === 200) { //ok
+
+                var response = JSON.parse(xhr.responseText);
+
+                if (response.result === "success") {
+                    refreshMessageTable(response.clients);
+                    inputMessage.value = "";
+                } else {
+                    alert("API Error: " + response.message);
+                }
+            } else {
+                alert("Server Error: " + xhr.status + " " + xhr.statusText);
+            }
+        }
+    }
+}
