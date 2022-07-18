@@ -575,7 +575,7 @@ function refreshMessageTable(userDbMessages) {
     for (var i = 0; i < userDbMessages.length; i++) {
         var message = userDbMessages[i];
         messageRows += '<tr>';
-        messageRows += '<td class="hidden">' + message.messageId + '</td>';
+        //messageRows += '<td class="hidden">' + message.messageId + '</td>';
         //MessageRows += '<td class="hidden">' + client.clientId + '</td>';
         messageRows += '<td>' + message.fromUser + '</td>';
         messageRows += '<td>' + message.messageText + '</td>';
@@ -589,7 +589,8 @@ function refreshMessageTable(userDbMessages) {
     }
 
     dynamicMessageRows.innerHTML = messageRows;
-    tablepls();
+    createTable()
+    
 }
 
 function insertMessage() {
@@ -630,24 +631,24 @@ function insertMessage() {
     }
 }
 
-function calculateAge (birthDate, otherDate) {
-    birthDate = new Date(birthDate);
-    otherDate = new Date(otherDate);
+// function calculateAge (birthDate, otherDate) {
+//     birthDate = new Date(birthDate);
+//     otherDate = new Date(otherDate);
 
-    var years = (otherDate.getFullYear() - birthDate.getFullYear());
+//     var years = (otherDate.getFullYear() - birthDate.getFullYear());
 
-    if (otherDate.getMonth() < birthDate.getMonth() || 
-        otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
-        years--;
-    }
+//     if (otherDate.getMonth() < birthDate.getMonth() || 
+//         otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+//         years--;
+//     }
 
-    return years;
-}
+//     return years;
+// }
 
-function tablepls() {
-    $('#test-table').DataTable( {
+function createTable() {
+    $('#message-table').DataTable( {
         "lengthChange": false,
         "pageLength": 8,
         "searching": false
     });
-};
+}
