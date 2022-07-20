@@ -15,7 +15,8 @@ var updateClientTitle = document.getElementById("update-client-title");
 var clientPortfolioSection = document.getElementById("client-profile-section");
 var clientLoginHome = document.getElementById("client-login-home");
 var currentPrimaryContactIdNumber;
-//client profile section
+// var currentPrimaryContactId;
+//client profile dynamic update section
 var clientProfileFirstName = document.getElementById("client-profile-first-name");
 var clientProfileLastName = document.getElementById("client-profile-last-name");
 var clientProfileDateOfBirth = document.getElementById("client-profile-date-of-birth");
@@ -24,7 +25,7 @@ var clientProfileDateOfBirth = document.getElementById("client-profile-date-of-b
 var profileSection = document.getElementById("profile-section");
 var therapistHomeNavLink = document.getElementById("therapist-home-nav-link");
 var therapistLoginHome = document.getElementById("therapist-login-home");
-var currentTherapistId;
+var currentLoggedInID;
 
 // General
 var loginSection = document.getElementById("login-section");
@@ -40,6 +41,8 @@ var dynamicMessageRows = document.getElementById("dynamic-message-rows");
 var clientIdForMessages;
 var therapistIdForMessages;
 var primaryContactIdForMessages;
+
+var tableCount = 1;
 
 
 function LogOut() {
@@ -108,11 +111,22 @@ function ShowUpdateClientSection(event) {
     document.getElementById("client-id").value = event.target.dataset.clientId;
     document.getElementById("client-first-name").value = event.target.dataset.firstName;
     document.getElementById("client-last-name").value = event.target.dataset.lastName;
-    document.getElementById("date").value = event.target.dataset.dateOfBirth;
+    document.getElementById("primary-contact-first-name").value = event.target.dataset.primaryContactFirstName;
+    document.getElementById("primary-contact-last-name").value = event.target.dataset.primaryContactLastName;
+    document.getElementById("client-date-of-birth").value = event.target.dataset.dateOfBirth;
+    document.getElementById("address").value = event.target.dataset.address;
+    document.getElementById("city").value = event.target.dataset.city;
+    document.getElementById("zip").value = event.target.dataset.zipcode;
+    document.getElementById("state").value = event.target.dataset.stateId;
+    document.getElementById("phone").value = event.target.dataset.phone;
+    document.getElementById("email").value = event.target.dataset.emailAddress;
+
+
     //updateClientSection.classList.remove("hidden");
     profileSection.classList.add("hidden");
     updateClientButton.classList.remove("hidden");
     updateClientTitle.classList.remove("hidden");
+    clientPortfolioSection.classList.add("hidden");
 }
 
 function SubmitAdd() {
@@ -124,11 +138,14 @@ function SubmitAdd() {
 }
 
 function SubmitUpdate() {
+    //event.preventDefault();
     //updateClientSection.classList.add("hidden");
     profileSection.classList.remove("hidden");
     updateClientButton.classList.add("hidden");
     updateClientTitle.classList.add("hidden");
     addClientSection.classList.add("hidden");
+    // Un comment below once you move update to client profile
+    //clientPortfolioSection.classList.remove("hidden");
     updateClient();
 }
 
@@ -163,18 +180,22 @@ function ShowTherapistHome() {
     addClientSection.classList.add("hidden");
     //updateClientSection.classList.add("hidden");
     conditionsSection.classList.add("hidden");
+    clientPortfolioSection.classList.add("hidden");
 }
 
 function ShowClientHome() {
     resourcesNavLink.classList.remove("active");
-    clientLoginHome.classList.remove("hidden");
-    clientHomeNavLink.classList.add("active");
     interventionSection.classList.add("hidden");
     profileSection.classList.add("hidden");
     clientPortfolioSection.classList.remove("hidden");
     addClientSection.classList.add("hidden");
     //updateClientSection.classList.add("hidden");
     conditionsSection.classList.add("hidden");
+
+    const interval = setInterval(function() {
+        selectMessages();
+      }, 5000);
+
 }
 
 function logInAsTherapist() {
@@ -198,6 +219,7 @@ function logInAsParent() {
     logOutButton.classList.remove("hidden");
     clientLoginHome.classList.remove("hidden");
     clientHomeNavLink.classList.add("active");
+    selectClients();
     if (!failedLogIn.classList.contains("hidden")) {
         failedLogIn.classList.add("hidden");
     }
@@ -237,11 +259,12 @@ function logIn() {
                 if (logIn.result === "Therapist") {
                     inputUsername.value = "";
                     inputPassword.value = "";
-                    currentTherapistId = logIn.id;
+                    currentLoggedInID = logIn.id;
                     logInAsTherapist();
                 } else if (logIn.result === "Parent") {
                     inputUsername.value = "";
                     inputPassword.value = "";
+                    currentLoggedInID = logIn.id;
                     logInAsParent();
                 } else {
                     logInFailed();
@@ -321,7 +344,7 @@ function loadClientProfile(event) {
 
 function selectClients() {
     var baseURL = "https://localhost:5001/selectclients";
-    var queryString = "";
+    var queryString = "?currentLoggedInID=" + currentLoggedInID;
 
     var xhr = new XMLHttpRequest();
 
@@ -363,7 +386,7 @@ function refreshClientTable(clients) {
         clientRows += '<td>' + client.clientLastName + '</td>';
         clientRows += '<td>' + client.clientDateOfBirth + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-profile btn btn-outline-primary btn-sm">Profile</button>' + '</td>';
-        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.clientFirstName + '" data-last-name="' + client.clientLastName + '" data-date-of-birth="' + client.clientDateOfBirth + '" data-primary-contact-id="' + client.primaryContactId + '"type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
+        clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" data-first-name="' + client.clientFirstName + '" data-last-name="' + client.clientLastName + '" data-date-of-birth="' + client.clientDateOfBirth + '" data-primary-contact-id="' + client.primaryContactId + '" data-primary-contact-first-name="' + client.primaryContactFirstName + '" data-primary-contact-last-name="' + client.primaryContactLastName + '" data-address="' + client.address + '" data-city="' + client.city + '" data-state-id="' + client.stateId + '" data-zipcode="' + client.zipcode + '" data-phone="' + client.phone + '" data-email-address="' + client.emailAddress + '"type="button" class="btn-client-update btn btn-outline-success btn-sm">Update</button>' + '</td>';
         clientRows += '<td>' + '<button data-client-id="' + client.clientId + '" type="button" class="btn-client-delete btn btn-outline-danger btn-sm">Delete</button>' + '</td>';
         clientRows += '</tr>';
     }
@@ -418,7 +441,7 @@ function insertClient() {
     var contactState = inputContactState.value;
 
     var baseURL = "https://localhost:5001/InsertClient";
-    var queryString = "?primaryContactId=" + currentPrimaryContactIdNumber + "&therapistId=" + currentTherapistId + "&primaryContactFirstName=" + contactFirstName + "&primaryContactLastName=" + contactLastName + "&address=" + contactAddress + "&city=" + contactCity + "&stateId=" + contactState + "&zipCode=" + contactZip + "&phone=" + contactPhone + "&emailAddress=" + contactEmail + "&clientFirstName=" + firstName + "&clientLastName=" + lastName + "&clientDateOfBirth=" + dateOfBirth;
+    var queryString = "?primaryContactId=" + currentPrimaryContactIdNumber + "&therapistId=" + currentLoggedInID + "&primaryContactFirstName=" + contactFirstName + "&primaryContactLastName=" + contactLastName + "&address=" + contactAddress + "&city=" + contactCity + "&stateId=" + contactState + "&zipCode=" + contactZip + "&phone=" + contactPhone + "&emailAddress=" + contactEmail + "&clientFirstName=" + firstName + "&clientLastName=" + lastName + "&clientDateOfBirth=" + dateOfBirth;
 
     var xhr = new XMLHttpRequest();
 
@@ -459,15 +482,33 @@ function updateClient() {
     var inputClientId = document.getElementById("client-id");
     var inputClientFirstName = document.getElementById("client-first-name");
     var inputClientLastName = document.getElementById("client-last-name");
-    var inputDateOfBirth = document.getElementById("date");
+    var inputPrimaryContactFirstName = document.getElementById("primary-contact-first-name");
+    var primaryContactLastName = document.getElementById("primary-contact-last-name");
+    var inputClientFirstName = document.getElementById("client-first-name");
+    var inputDateOfBirth = document.getElementById("client-date-of-birth");
+    var inputAddress = document.getElementById("address");
+    var inputCity = document.getElementById("city");
+    var inputZipcode = document.getElementById("zipcode");
+    var inputStateId = document.getElementById("state-id");
+    var inputPhone = document.getElementById("phone");
+    var inputEmailAddress = document.getElementById("email-address");
 
     var clientId = inputClientId.value;
     var clientFirstName = inputClientFirstName.value;
     var clientLastName = inputClientLastName.value;
     var clientDateOfBirth = inputDateOfBirth.value;
+    var primaryContactFirstName = inputPrimaryContactFirstName.value;
+    var primaryContactLastName = inputPrimaryContactLastName.value;
+    var address = inputAddress.value;
+    var city = inputCity.value;
+    var zipcode = inputZipcode.value;
+    var stateId = inputStateId.value;
+    var phone = inputPhone.value;
+    var emailAddress = inputEmailAddress.value;
 
     var baseURL = "https://localhost:5001/UpdateClient";
-    var queryString = "?clientId=" + clientId + "&firstName=" + clientFirstName + "&lastName=" + clientLastName + "&dateOfBirth=" + clientDateOfBirth;
+    // var queryString = "?clientId=" + clientId + "&clientFirstName=" + clientFirstName + "&clientLastName=" + clientLastName + "&clientDateOfBirth=" + clientDateOfBirth + "&dateOfBirth=" + clientDateOfBirth;
+    var queryString = "?primaryContactId=" + currentPrimaryContactIdNumber + "&primaryContactFirstName=" + primaryContactFirstName + "&primaryContactLastName=" + primaryContactLastName + "&address=" + address + "&city=" + city + "&stateId=" + stateId + "&zipCode=" + zipcode + "&phone=" + phone + "&emailAddress=" + emailAddress + "&clientId=" + clientId + "&clientFirstName=" + clientFirstName + "&clientLastName=" + clientLastName + "&clientDateOfBirth=" + clientDateOfBirth;
 
     var xhr = new XMLHttpRequest();
 
@@ -589,13 +630,22 @@ function refreshMessageTable(userDbMessages) {
     }
 
     dynamicMessageRows.innerHTML = messageRows;
-    createTable()
+    while (tableCount <= 1)
+    {
+        createTable()
+        tableCount++;
+    }
+    
+    
     
 }
 
 function insertMessage() {
     var inputMessage = document.getElementById("new-message");
-    var sentFromId = currentTherapistId
+    var sentFromId;
+
+        sentFromId = currentLoggedInID;
+
     var clientIdInputMessage = clientIdForMessages;
 
     var messageToSend = inputMessage.value;
@@ -652,3 +702,11 @@ function createTable() {
         "searching": false
     });
 }
+
+// MODIFY FUNCTION BELOW TO REFRESH MESSAGE TABLE WHERE NEEDED
+// var number = 0;
+
+
+// const interval = setInterval(function() {
+//     selectMessages();
+//   }, 5000);
