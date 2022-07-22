@@ -146,12 +146,11 @@
   
   <div class="col-3">
     <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
-      <img src="img/therapist.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
-      <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">John Doe, <strong>OTD-S</strong> </h4>
+      <img src="img/profile_placeholder.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
+      <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="therapist-profile-display-name"></span>, <strong>OTD-S</strong> </h4>
       <h4><i>ArCA Therapy</i> </h4>
       <hr>
-      <h5>Active Caseload: <strong>5</strong></h5>
-      <h5>Unresolved Messages: <strong>3</strong></h5>
+      <h5>Active Caseload: <strong><span id="current-caseload"></span></strong></h5>
   </div>
   </div>
   
@@ -225,14 +224,14 @@
  </div>
 
 
-    <span id="therapist-card-view" class="col-3 hidden">
+    <span id="" class="col-3">
       <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
-        <span id="therapist-card-view">
-          <img src="img/client.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
+        <span id="therapist-card-view" class="hidden">
+          <img src="img/profile_placeholder.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
           <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="therapist-profile-client-first-name" style="padding-right: 8px;"></span><span id="therapist-profile-client-last-name"></span></h4>
           <hr>
           <h5>Date Of Birth: <strong id="therapist-profile-client-date-of-birth"></strong></h5>
-          <h5>Age: <strong>5</strong></h5>
+          
           <hr>
           <h5>Primary Contact: <strong> <span id="therapist-profile-primary-contact-first-name" style="padding-right: 8px;"></span><span id="therapist-profile-primary-contact-last-name"></span></strong></h5>
           <h5>Phone Number: <strong> <span id="therapist-profile-primary-contact-phone"></span></strong></h5>
@@ -246,12 +245,12 @@
         
         
         <span id="client-card-view" class="hidden">
-          <img src="img/client.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
+          <img src="img/profile_placeholder.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
           <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="client-profile-first-name" style="padding-right: 8px;"></span><span id="client-profile-last-name"></span></h4>
           <h5>Date Of Birth: <strong id="client-profile-date-of-birth"></strong></h5>
-          <h5>Age: <strong>5</strong></h5>
+          
           <hr>
-          <h5>Therapist: <strong><span id="client-profile-therapist-first-name" style="padding-right: 8px;"></span> <span id="client-profile-therapist-last-name"></span>,<span id="client-profile-therapist-title" style="padding-left: 8px;"></span></strong></h5>
+          <h5>Therapist: <strong><span id="client-profile-therapist-first-name" style="padding-right: 3px;"></span> <span id="client-profile-therapist-last-name"></span>,<span id="client-profile-therapist-title" style="padding-left: 3px;"></span></strong></h5>
           <h5>Phone: <span id="client-profile-therapist-phone" style="padding-left: 8px;"></span></h5>
   
         </span>
@@ -307,11 +306,11 @@
       <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration shadow-lg" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
-            <div id="submit-client-title" class="hidden">
-              <h2>Add New Client:</h2>
+            <div>
+              <h2 id="submit-client-title" class="hidden">Add New Client:</h2>
             </div>
-            <div id="update-client-title" class="hidden">
-              <h2>Update Client:</h2>
+            <div>
+              <h2 id="update-client-title" class="hidden">Update Client:</h2>
             </div>
             
             <form>
@@ -554,18 +553,18 @@
                   </div>
                 </div> 
               <!---->
-              <div id="submit-button-section" class="hidden">
-                <div  class="form-group d-flex flex-row-reverse">
+              <div id="submit-button-section" class="form-group d-flex flex-row-reverse hidden">
+                <div id="submit-button" class=" hidden">
                   <button name="submit" type="" class="btn btn-primary" onclick="SubmitAdd(); return false;">Submit</button>
                 </div>
               </div>
               <div id="update-button-section" class="hidden  d-flex flex-row-reverse">
                 
-                <span  class="form-group" style="padding-left: 8px;">
-                  <button name="update" class="btn btn-primary" onclick="SubmitUpdate(); return false;">Update</button>
+                <span id="update-button" class="form-group" style="padding-left: 8px;">
+                  <button  name="update" class="btn btn-primary" onclick="SubmitUpdate(); return false;">Update</button>
                 </span>
-                <span  class="form-group">
-                  <button name="update" class="btn btn-primary" onclick="CancelUpdate(); return false">Cancel</button>
+                <span id="cancel-update-button" class="form-group">
+                  <button  name="update" class="btn btn-primary" onclick="CancelUpdate(); return false">Cancel</button>
                 </span>
               </div>
               
