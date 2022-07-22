@@ -18,7 +18,7 @@
 <!--TESTING-->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
   </head>
-<body>
+<body id="body">
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow-lg sticky-top">
@@ -66,6 +66,7 @@
 
 <!-- LOGIN -->
 
+
 <div id="login-section" class="">
   <section class="vh-90 mt-5" style="background-color: #79a6a3;">
     <div class="container py-5 h-100">
@@ -73,7 +74,6 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-lg" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-  
               <img src="img/NewLogo.png" alt="" class="loginlogo">
               <span id="failed-login" class="hidden"><h6 style="color: red; padding: 5px;">The username or password you entered was incorrect. Please try again.</h6></span>
               <div class="form-outline mb-4">
@@ -96,6 +96,44 @@
 
 <!-- END LOGIN -->
 
+<!-- HIPPA -->
+<div id="hippa-section" class="hidden">
+  <section class="vh-90 mt-5" style="background-color: #79a6a3;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card shadow-lg" style="border-radius: 1rem;">
+            <div class="p-5 text-center">
+              <h1>HIPAA CONSENT</h1>
+              <p><h3>By proceeding, I am acknowledging that I understand that under the Health Insurance
+                Portability and Accountability Act (HIPAA), I have certain rights to privacy regarding my minor
+                child’s protected health information. I understand that this information can and will be used to:</h5></p>
+               <h4> <ul style="text-align: left; padding-left: 100px; padding-right: 100px;">
+                  <li>Conduct, plan, and direct my child’s treatment and follow up among the multiple
+                    providers who may be involved with treatment directly or indirectly (Example: physical
+                    therapists, speech therapists, teachers, psychologists, etc.)</li>
+                  <li>Share real-time written updates between all members of the therapy team with
+                    authorization to your child’s page.</li>
+                  <li>Share pictures and/or videos of your child only with team members with authorization to
+                    your child’s page regarding intervention ideas and goal progress.</li>
+                  <li>Remind you of upcoming appointments and intervention options.</li>
+                  </ul></h4>
+                <p><h3>I understand that I have the right to change what information can be shared at any time. I
+                  understand that ArCA Therapy has the right to change its Notice of Privacy Practices from time
+                  to time and I may contact the providers at any time to obtain a current copy.</h3></p>
+                  <div class="d-flex justify-content-center pt-2">
+                    <button style="width: 30%;" class="btn btn-success btn-lg btn-block shadow" onclick="logInAsParent()"><h3>Proceed</h3></button>
+                  </div>
+                    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- END HIPPA -->
 
 <!-- THERAPIST PROFILE -->
 
@@ -161,43 +199,68 @@
 <div class="row justify-content-center">
 
   
-  <!-- <div id="therapist-card-view" class="hidden">
+  <!-- <span id="therapist-card-view" class="hidden">
     <div class="col-3">
       <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
-        <img src="img/client.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
-        <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="client-profile-first-name" style="padding-right: 8px;"></span><span id="client-profile-last-name"></span></h4>
-        <hr>
-        <h5>Date Of Birth: <strong id="client-profile-date-of-birth"></strong></h5>
-        <h5>Age: <strong>5</strong></h5>
-        <hr>
-        <h5>Primary Contact: <strong> <span id="therapist-profile-primary-contact-first-name" style="padding-right: 8px;"></span><span id="therapist-profile-primary-contact-last-name"></span></strong></h5>
-        <h5>Phone Number: <strong> <span id="therapist-profile-primary-contact-phone"></span></strong></h5>
-        <h5>Email Address: <strong> <span id="therapist-profile-primary-contact-email"></span></strong></h5>
-        <div class="card-footer d-flex justify-content-around">
-          <button type="button" class="btn-client-update btn btn-outline-success btn-lg" onclick="ShowUpdateClientSection(); return false;">Update</button>
-          <button type="button" class="btn-client-delete btn btn-outline-danger btn-lg" onclick="deleteClient(); return false;">Delete</button>
+    </div>
+    </div>
+  </span> -->
   
-        </div>
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this client?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteClient();">Delete</button>
+      </div>
     </div>
-    </div>
-  </div> -->
-  <!-- <div id="client-card-view" class="hidden"> -->
-    <div class="col-3">
+  </div>
+ </div>
+
+
+    <span id="therapist-card-view" class="col-3 hidden">
       <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center rounded nav-background shadow-lg">
-        <img src="img/client.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
-        <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="client-profile-first-name" style="padding-right: 8px;"></span><span id="client-profile-last-name"></span></h4>
-        <h5>Date Of Birth: <strong id="client-profile-date-of-birth"></strong></h5>
-        <h5>Age: <strong>5</strong></h5>
-        <hr>
-        <h5>Therapist: <strong><span id="client-profile-therapist-first-name" style="padding-right: 8px;"></span> <span id="client-profile-therapist-last-name"></span>,<span id="client-profile-therapist-title" style="padding-left: 8px;"></span></strong></h5>
-        <h5>Phone: <span id="client-profile-therapist-phone" style="padding-left: 8px;"></span></h5>
-    </div>
-    </div>
-  <!-- </div> -->
+        <span id="therapist-card-view">
+          <img src="img/client.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
+          <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="therapist-profile-client-first-name" style="padding-right: 8px;"></span><span id="therapist-profile-client-last-name"></span></h4>
+          <hr>
+          <h5>Date Of Birth: <strong id="therapist-profile-client-date-of-birth"></strong></h5>
+          <h5>Age: <strong>5</strong></h5>
+          <hr>
+          <h5>Primary Contact: <strong> <span id="therapist-profile-primary-contact-first-name" style="padding-right: 8px;"></span><span id="therapist-profile-primary-contact-last-name"></span></strong></h5>
+          <h5>Phone Number: <strong> <span id="therapist-profile-primary-contact-phone"></span></strong></h5>
+          <h5>Email Address: <strong> <span id="therapist-profile-primary-contact-email"></span></strong></h5>
+          <div class="card-footer d-flex justify-content-around">
+            <button type="button" class="btn-client-update btn btn-outline-success btn-lg" onclick="ShowUpdateClientSection(); return false;">Update</button>
+            <button type="button" class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+          </div>
   
+        </span>
+        
+        
+        <span id="client-card-view" class="hidden">
+          <img src="img/client.jpg" alt="" class="profile-pic rounded-circle shadow-lg mb-5">
+          <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600"><span id="client-profile-first-name" style="padding-right: 8px;"></span><span id="client-profile-last-name"></span></h4>
+          <h5>Date Of Birth: <strong id="client-profile-date-of-birth"></strong></h5>
+          <h5>Age: <strong>5</strong></h5>
+          <hr>
+          <h5>Therapist: <strong><span id="client-profile-therapist-first-name" style="padding-right: 8px;"></span> <span id="client-profile-therapist-last-name"></span>,<span id="client-profile-therapist-title" style="padding-left: 8px;"></span></strong></h5>
+          <h5>Phone: <span id="client-profile-therapist-phone" style="padding-left: 8px;"></span></h5>
+  
+        </span>
+    </div>
+  </span>
+
   
 
-<div class="col-7">
+ <div class="col-7">
     <div class="table-responsive rounded">
         <table id="message-table" style="text-align:center" class="table table-striped table-hover table-light border-dark shadow table-sm table-bordered mb-1">
           <thead>
@@ -475,7 +538,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text">Phone Number</div>
                       </div> 
-                      <input id="primary-contact-phone" name="primary-contact-phone" type="text" class="form-control">
+                      <input maxlength="12" id="primary-contact-phone" name="primary-contact-phone" type="text" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -496,10 +559,14 @@
                   <button name="submit" type="" class="btn btn-primary" onclick="SubmitAdd(); return false;">Submit</button>
                 </div>
               </div>
-              <div id="update-button-section" class="hidden">
-                <div  class="form-group d-flex flex-row-reverse">
+              <div id="update-button-section" class="hidden  d-flex flex-row-reverse">
+                
+                <span  class="form-group" style="padding-left: 8px;">
                   <button name="update" class="btn btn-primary" onclick="SubmitUpdate(); return false;">Update</button>
-                </div>
+                </span>
+                <span  class="form-group">
+                  <button name="update" class="btn btn-primary" onclick="CancelUpdate(); return false">Cancel</button>
+                </span>
               </div>
               
             </form>

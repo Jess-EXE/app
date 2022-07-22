@@ -16,6 +16,7 @@ var clientProfileSection = document.getElementById("client-profile-section");
 var clientLoginHome = document.getElementById("client-login-home");
 var currentPrimaryContactIdNumber;
 var clientProfileCard = document.getElementById("client-card-view");
+var hippaSection = document.getElementById("hippa-section");
 // var currentPrimaryContactId;
 
 // client profile dynamic update section
@@ -23,10 +24,13 @@ var clientProfileFirstName = document.getElementById("client-profile-first-name"
 var clientProfileLastName = document.getElementById("client-profile-last-name");
 var clientProfileDateOfBirth = document.getElementById("client-profile-date-of-birth");
 
-var clientProfilePrimaryContactFirstName = document.getElementById("therapist-profile-primary-contact-first-name");
-var clientProfilePrimaryContactLastName = document.getElementById("therapist-profile-primary-contact-last-name");
-var clientProfilePrimaryContactPhone = document.getElementById("therapist-profile-primary-contact-phone");
-var clientProfilePrimaryContactEmail = document.getElementById("therapist-profile-primary-contact-email");
+var therapistProfileClientFirstName = document.getElementById("therapist-profile-client-first-name");
+var therapistProfileClientLastName = document.getElementById("therapist-profile-client-last-name");
+var therapistProfileClientDateOfBirth = document.getElementById("client-profile-date-of-birth");
+var therapistProfileClientPrimaryContactFirstName = document.getElementById("therapist-profile-primary-contact-first-name");
+var therapistProfileClientPrimaryContactLastName = document.getElementById("therapist-profile-primary-contact-last-name");
+var therapistProfileClientPrimaryContactPhone = document.getElementById("therapist-profile-primary-contact-phone");
+var therapistProfileClientPrimaryContactEmail = document.getElementById("therapist-profile-primary-contact-email");
 
 var clientProfileTherapistFirstName = document.getElementById("client-profile-therapist-first-name");
 var clientProfileTherapistLastName = document.getElementById("client-profile-therapist-last-name");
@@ -56,6 +60,7 @@ var profilePrimaryContactEmailAddress;
 var profileSection = document.getElementById("profile-section");
 var therapistHomeNavLink = document.getElementById("therapist-home-nav-link");
 var therapistLoginHome = document.getElementById("therapist-login-home");
+var therapistProfileCard = document.getElementById("therapist-card-view")
 
 
 // General
@@ -100,13 +105,15 @@ function LogOut() {
     conditionsSection.classList.add("hidden");
     currentTherapistId = null;
     therapistLoggedIn = false;
-    dynamicMessageRows = "";
+    dynamicMessageRows.innerHTML = "";
+    therapistHomeNavLink.classList.add("hidden");
+    clientLoginHome.classList.add("hidden");
 }
 
 
-function ClientLogIn() {
-    // Modify this to show profiles of clients that they can click on to view messages
-}
+// function ClientLogIn() {
+//     // Modify this to show profiles of clients that they can click on to view messages
+// }
 
 function ShowClientPortfolio() {
     clientProfileSection.classList.remove("hidden")
@@ -160,6 +167,13 @@ function ShowUpdateClientSection() {
     document.getElementById("primary-contact-state").value = profilePrimaryContactStateId;
     document.getElementById("primary-contact-phone").value = profilePrimaryContactPhone;
     document.getElementById("primary-contact-email").value = profilePrimaryContactEmailAddress;
+}
+
+function CancelUpdate() {
+    updateClientButton.classList.add("hidden");
+    updateClientTitle.classList.add("hidden");
+    clientProfileSection.classList.remove("hidden");
+    addClientSection.classList.add("hidden");
 }
 
 function SubmitAdd() {
@@ -240,29 +254,36 @@ function logInAsTherapist() {
         failedLogIn.classList.add("hidden");
     }
     therapistLoggedIn = true;
+
+        clientProfileCard.classList.add("hidden");
+
     selectClients();
 }
 
 function logInAsParent() {
-    clientProfileSection.classList.remove("hidden")
+    hippaSection.classList.add("hidden");
+    clientProfileSection.classList.remove("hidden");
     loginSection.classList.add("hidden");
     navItems.classList.remove("hidden");
     logOutButton.classList.remove("hidden");
     clientLoginHome.classList.remove("hidden");
     clientHomeNavLink.classList.add("active");
-    selectClients();
-    setTimeout(function() {
-        loadProfileAsClient();
-      }, 75);
-
-    setTimeout(function() {
-        selectMessages();
-      }, 100);
+    //setTimeout(function() {
+    loadProfileAsClient();
+    //  }, 5000);
+    //  setTimeout(function() {
+    selectMessages();
+    //  }, 5000);    
     
+    // loadProfileAsClient();
+    //     selectMessages();
+
     if (!failedLogIn.classList.contains("hidden")) {
         failedLogIn.classList.add("hidden");
     }
+    therapistLoginHome.classList.add("hidden");
 }
+
 
 function logInFailed() {
     if (failedLogIn.classList.contains("hidden")) {
@@ -304,7 +325,9 @@ function logIn() {
                     inputUsername.value = "";
                     inputPassword.value = "";
                     currentLoggedInID = logIn.id;
-                    logInAsParent();
+                    loginSection.classList.add("hidden");
+                    hippaSection.classList.remove("hidden");
+                    selectClients();
                 } else {
                     logInFailed();
                 }
@@ -346,6 +369,7 @@ function GetCurrentPrimaryContactIdNumber() {
 
 function loadClientProfile(event) {
     //var clientId = document.getElementById("client-id").value = event.target.dataset.clientId;
+    therapistProfileCard.classList.remove("hidden");
     profileClientId = event.target.dataset.clientId;
     profilePrimaryContactId = event.target.dataset.primaryContactId;
     profileClientFirstName = event.target.dataset.firstName;
@@ -359,6 +383,14 @@ function loadClientProfile(event) {
     profilePrimaryContactStateId = event.target.dataset.stateId;
     profilePrimaryContactPhone = event.target.dataset.phone;
     profilePrimaryContactEmailAddress = event.target.dataset.emailAddress;
+
+    therapistProfileClientFirstName.innerHTML = profileClientFirstName;
+    therapistProfileClientLastName.innerHTML = profileClientLastName;
+    therapistProfileClientDateOfBirth.innerHTML = profileClientDateOfBirth;
+    therapistProfileClientPrimaryContactFirstName.innerHTML = profilePrimaryContactFirstName;
+    therapistProfileClientPrimaryContactLastName.innerHTML = profilePrimaryContactLastName;
+    therapistProfileClientPrimaryContactEmail.innerHTML = profilePrimaryContactEmailAddress;
+    
     // Do this for messages then reset value in Message function
     clientIdForMessages = profileClientId;
     //var currentPrimaryContactId = document.getElementById("primary-contact-id").value = event.target.dataset.primaryContactId;
@@ -381,6 +413,7 @@ function loadClientProfile(event) {
 
                 var client = JSON.parse(xhr.responseText);
                 ShowClientHome();
+                clientHomeNavLink.classList.add("hidden");
                 clientProfileFirstName.innerHTML = client.clientFirstName;
                 clientProfileLastName.innerHTML = client.clientLastName;
                 clientProfileDateOfBirth.innerHTML = client.clientDateOfBirth;
@@ -410,16 +443,17 @@ function loadProfileAsClient() {
         if (xhr.readyState === 4) { //done
             if (xhr.status === 200) { //ok
 
-                // var client = JSON.parse(xhr.responseText);
-                // ShowClientHome();
-                 clientProfileCard.classList.remove("hidden");
-                // clientProfileFirstName.innerHTML = client.clientFirstName;
-                // clientProfileLastName.innerHTML = client.clientLastName;
-                // clientProfileDateOfBirth.innerHTML = client.clientDateOfBirth;
-                // clientProfileTherapistFirstName.innerHTML = client.therapistFirstName
-                // clientProfileTherapistLastName.innerHTML = client.therapistLastName
-                // clientProfileTherapistTitle.innerHTML = client.therapistTitle
-                // clientProfileTherapistPhone.innerHTML = client.therapistOfficePhone
+                var client = JSON.parse(xhr.responseText);
+                ShowClientHome();
+                clientProfileCard.classList.remove("hidden");
+                clientProfileFirstName.innerHTML = client.clientFirstName;
+                clientProfileLastName.innerHTML = client.clientLastName;
+                clientProfileDateOfBirth.innerHTML = client.clientDateOfBirth;
+                clientProfileTherapistFirstName.innerHTML = client.therapistFirstName
+                clientProfileTherapistLastName.innerHTML = client.therapistLastName
+                clientProfileTherapistTitle.innerHTML = client.therapistTitle
+                clientProfileTherapistPhone.innerHTML = client.therapistOfficePhone
+                therapistHomeNavLink.classList.add("hidden");
                 //selectMessages();
 
             } else {
@@ -683,7 +717,6 @@ function updateClient() {
 
 function deleteClient() {
     //var clientId = profileClientId;
-
     ShowTherapistHome()
 
     var baseURL = "https://localhost:5001/DeleteClient";
@@ -920,6 +953,6 @@ function deleteMessage(event) {
 //   }, 5000);
 
 
-function hideUpdateSectionValues(); {
-    
-}
+// function hideUpdateSectionValues(); {
+
+// }
